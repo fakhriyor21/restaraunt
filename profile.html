@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mening Profilim | O'zbek Oshxonasi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="icon" type="image/x-icon" href="images/logos/logo.png">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://cdn-icons-png.flaticon.com/512/5787/5787016.png" alt="Logo" height="40" class="me-2">
+                <span class="brand-text">O'zbek Oshxonasi</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Bosh sahifa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#categories">Kategoriyalar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#popular">Mashhur taomlar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count badge bg-danger">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle"></i> Profil
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" href="profile.html"><i class="fas fa-user me-2"></i>Mening profilim</a></li>
+                            <li><a class="dropdown-item" href="#orders"><i class="fas fa-history me-2"></i>Buyurtma tarixi</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Chiqish</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center">
+                    <div class="profile-avatar">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Avatar" class="avatar-img">
+                        <button class="btn btn-sm btn-outline-light avatar-edit" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h1 class="profile-name" id="userFullName">Ism Familiya</h1>
+                    <p class="profile-email text-muted" id="userEmail">user@example.com</p>
+                    <div class="profile-stats d-flex">
+                        <div class="me-4">
+                            <span class="stat-value" id="totalOrdersCount">0</span>
+                            <span class="stat-label">Buyurtma</span>
+                        </div>
+                        <div class="me-4">
+                            <span class="stat-value" id="totalSpent">0 so'm</span>
+                            <span class="stat-label">Sarflangan</span>
+                        </div>
+                        <div>
+                            <span class="stat-value" id="memberSince">2023</span>
+                            <span class="stat-label">Yildan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="fas fa-edit me-1"></i>Profilni tahrirlash
+                    </button>
+                    <button class="btn btn-primary" onclick="window.location.href='index.html#categories'">
+                        <i class="fas fa-plus me-1"></i>Yangi buyurtma
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="container py-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="profile-sidebar card">
+                    <div class="card-body">
+                        <ul class="nav flex-column profile-menu">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#profile-info">
+                                    <i class="fas fa-user-circle me-2"></i>Shaxsiy ma'lumotlar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#orders">
+                                    <i class="fas fa-shopping-bag me-2"></i>Buyurtmalarim
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#addresses">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Manzillarim
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#wishlist">
+                                    <i class="fas fa-heart me-2"></i>Sevimlilar
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#security">
+                                    <i class="fas fa-shield-alt me-2"></i>Xavfsizlik
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#notifications">
+                                    <i class="fas fa-bell me-2"></i>Bildirishnomalar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h6 class="card-title">Bonuslarim</h6>
+                        <div class="loyalty-points text-center py-3">
+                            <div class="points-value display-4 text-primary" id="loyaltyPoints">0</div>
+                            <div class="points-label">ball</div>
+                            <p class="small text-muted mt-2">Har 10,000 so'm uchun 100 ball</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Profile Info Section -->
+                <section id="profile-info" class="profile-section">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Shaxsiy Ma'lumotlar</h5>
+                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="fas fa-edit me-1"></i>Tahrirlash
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-muted">Ism</label>
+                                    <p class="form-control-static" id="profileFirstName">-</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-muted">Familiya</label>
+                                    <p class="form-control-static" id="profileLastName">-</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-muted">Elektron pochta</label>
+                                    <p class="form-control-static" id="profileEmail">-</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-muted">Telefon raqam</label>
+                                    <p class="form-control-static" id="profilePhone">-</p>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Manzil</label>
+                                <p class="form-control-static" id="profileAddress">-</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-muted">Ro'yxatdan o'tgan sana</label>
+                                    <p class="form-control-static" id="profileJoinDate">-</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-muted">Oxirgi tashrif</label>
+                                    <p class="form-control-static" id="profileLastLogin">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Orders Section -->
+                <section id="orders" class="profile-section d-none">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Buyurtmalar Tarixi</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-primary active" data-filter="all">Barchasi</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filter="pending">Kutilmoqda</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filter="processing">Tayyorlanmoqda</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filter="delivered">Yetkazilgan</button>
+                                </div>
+                            </div>
+                            
+                            <div id="userOrdersList">
+                                <!-- Orders will be loaded here -->
+                                <div class="text-center py-5">
+                                    <i class="fas fa-shopping-bag fa-3x text-muted mb-3"></i>
+                                    <h5 class="text-muted">Hali buyurtmalaringiz yo'q</h5>
+                                    <p class="text-muted">Birinchi buyurtmangizni berish uchun taom tanlang</p>
+                                    <a href="index.html#categories" class="btn btn-primary">Buyurtma berish</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Addresses Section -->
+                <section id="addresses" class="profile-section d-none">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Manzillarim</h5>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                                <i class="fas fa-plus me-1"></i>Yangi manzil
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="addressesList">
+                                <!-- Addresses will be loaded here -->
+                                <div class="col-12">
+                                    <div class="alert alert-info">
+                                        Hali manzil qo'shmagansiz. Birinchi manzilingizni qo'shing.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Wishlist Section -->
+                <section id="wishlist" class="profile-section d-none">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Sevimli Taomlar</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="wishlistItems">
+                                <!-- Wishlist items will be loaded here -->
+                                <div class="col-12 text-center py-5">
+                                    <i class="fas fa-heart fa-3x text-muted mb-3"></i>
+                                    <h5 class="text-muted">Sevimlilar ro'yxatingiz bo'sh</h5>
+                                    <p class="text-muted">Taomlarga ♡ belgisini bosing va ular bu yerda saqlanadi</p>
+                                    <a href="index.html#categories" class="btn btn-primary">Taomlarni ko'rish</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Security Section -->
+                <section id="security" class="profile-section d-none">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Parolni O'zgartirish</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="changePasswordForm">
+                                <div class="mb-3">
+                                    <label for="currentPassword" class="form-label">Joriy Parol</label>
+                                    <input type="password" class="form-control" id="currentPassword" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPassword" class="form-label">Yangi Parol</label>
+                                    <input type="password" class="form-control" id="newPassword" required>
+                                    <div class="form-text">Parol kamida 8 ta belgidan iborat bo'lishi kerak</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmNewPassword" class="form-label">Yangi Parolni Tasdiqlash</label>
+                                    <input type="password" class="form-control" id="confirmNewPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Parolni yangilash</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Faollik Sessiyalari</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Qurilma</th>
+                                            <th>IP manzil</th>
+                                            <th>Oxirgi faollik</th>
+                                            <th>Harakat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sessionsTable">
+                                        <tr>
+                                            <td>
+                                                <i class="fas fa-desktop me-2"></i> Windows - Chrome
+                                            </td>
+                                            <td>192.168.1.1</td>
+                                            <td>10 daqiqa oldin</td>
+                                            <td><button class="btn btn-sm btn-outline-danger">Tugatish</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fas fa-mobile-alt me-2"></i> iPhone - Safari
+                                            </td>
+                                            <td>192.168.1.2</td>
+                                            <td>2 kun oldin</td>
+                                            <td><button class="btn btn-sm btn-outline-danger">Tugatish</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Notifications Section -->
+                <section id="notifications" class="profile-section d-none">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Bildirishnoma Sozlamalari</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="notificationSettingsForm">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                        <label class="form-check-label" for="emailNotifications">
+                                            Email bildirishnomalari
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="smsNotifications">
+                                        <label class="form-check-label" for="smsNotifications">
+                                            SMS bildirishnomalari
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="orderUpdates" checked>
+                                        <label class="form-check-label" for="orderUpdates">
+                                            Buyurtma yangiliklari
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="promotionalEmails" checked>
+                                        <label class="form-check-label" for="promotionalEmails">
+                                            Promo-takliflar va chegirmalar
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                                        <label class="form-check-label" for="newsletter">
+                                            Yangiliklar va maslahatlar
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Sozlamalarni saqlash</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">So'ngi Bildirishnomalar</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group" id="notificationsList">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Buyurtma #12345 muvaffaqiyatli yetkazildi</h6>
+                                        <small>Bugun, 14:30</small>
+                                    </div>
+                                    <p class="mb-1">Sizning buyurtmangiz yetkazildi. Iltimos, baho qoldiring.</p>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Yangi chegirma faollashtirildi</h6>
+                                        <small>Kecha, 18:45</small>
+                                    </div>
+                                    <p class="mb-1">Barcha milliy taomlarga 20% chegirma!</p>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Buyurtma #12344 tayyorlanmoqda</h6>
+                                        <small>2 kun oldin</small>
+                                    </div>
+                                    <p class="mb-1">Sizning buyurtmangiz oshpazda. 20 daqiqada tayyor bo'ladi.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Profilni Tahrirlash</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editFirstName" class="form-label">Ism</label>
+                                <input type="text" class="form-control" id="editFirstName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editLastName" class="form-label">Familiya</label>
+                                <input type="text" class="form-control" id="editLastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEmail" class="form-label">Elektron pochta</label>
+                            <input type="email" class="form-control" id="editEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhone" class="form-label">Telefon raqam</label>
+                            <input type="text" class="form-control" id="editPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAddress" class="form-label">Asosiy manzil</label>
+                            <textarea class="form-control" id="editAddress" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar Modal -->
+    <div class="modal fade" id="avatarModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Avatar O'zgartirish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="avatar-preview mb-3">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar Preview" id="avatarPreview" class="rounded-circle" width="120" height="120">
+                        </div>
+                        <div class="avatar-options">
+                            <div class="row">
+                                <div class="col-4 mb-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="img-fluid rounded-circle avatar-option" data-avatar="1">
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/4333/4333609.png" class="img-fluid rounded-circle avatar-option" data-avatar="2">
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" class="img-fluid rounded-circle avatar-option" data-avatar="3">
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/921/921071.png" class="img-fluid rounded-circle avatar-option" data-avatar="4">
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/4333/4333607.png" class="img-fluid rounded-circle avatar-option" data-avatar="5">
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/4333/4333604.png" class="img-fluid rounded-circle avatar-option" data-avatar="6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100" id="saveAvatarBtn">Saqlash</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Address Modal -->
+    <div class="modal fade" id="addAddressModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi Manzil Qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAddressForm">
+                        <div class="mb-3">
+                            <label for="addressTitle" class="form-label">Manzil nomi (masalan: Uy, Ish)</label>
+                            <input type="text" class="form-control" id="addressTitle" placeholder="Uy" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressFull" class="form-label">To'liq manzil</label>
+                            <textarea class="form-control" id="addressFull" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressPhone" class="form-label">Telefon raqam (bu manzil uchun)</label>
+                            <input type="text" class="form-control" id="addressPhone">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="setAsDefault">
+                                <label class="form-check-label" for="setAsDefault">
+                                    Asosiy manzil sifatida belgilash
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Offcanvas (same as index.html) -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Savatcha</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems" class="mb-3">
+                <!-- Cart items will be loaded here -->
+                <p class="text-center text-muted">Savatchangiz bo'sh</p>
+            </div>
+            <div class="cart-summary mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Jami:</span>
+                    <span id="cartTotal">0 so'm</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Yetkazib berish:</span>
+                    <span>15 000 so'm</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between fw-bold">
+                    <span>Umumiy summa:</span>
+                    <span id="cartGrandTotal">15 000 so'm</span>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100 mb-2" id="checkoutBtn" onclick="window.location.href='checkout.html'">Buyurtma berish</button>
+            <button class="btn btn-outline-secondary w-100" data-bs-dismiss="offcanvas">Davom etish</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-4">O'zbek Oshxonasi</h5>
+                    <p>O'zbekistonning eng yaxshi milliy taomlarini uyingizga yetkazib beramiz.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="mb-4">Menyu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light footer-link">Bosh sahifa</a></li>
+                        <li><a href="index.html#categories" class="text-light footer-link">Kategoriyalar</a></li>
+                        <li><a href="index.html#popular" class="text-light footer-link">Mashhur taomlar</a></li>
+                        <li><a href="profile.html" class="text-light footer-link">Profil</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-4">Aloqa</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Toshkent sh., Yunusobod tumani</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +998 90 123 45 67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@uzbekoshxonasi.uz</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5 class="mb-4">To'lov usullari</h5>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa fs-4 me-2"></i>
+                        <i class="fab fa-cc-mastercard fs-4 me-2"></i>
+                        <i class="fab fa-cc-paypal fs-4 me-2"></i>
+                        <i class="fas fa-money-bill-wave fs-4"></i>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p>&copy; 2023 O'zbek Oshxonasi. Barcha huquqlar himoyalangan.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

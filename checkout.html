@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyurtmani Rasmiylashtirish | O'zbek Oshxonasi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <link rel="icon" type="image/x-icon" href="images/logos/logo.png">
+    
+    <!-- Payment Systems CSS -->
+    <style>
+    /* Payment Method Label Styling */
+    .payment-method-label {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+    }
+    
+    .payment-method-label:hover {
+        background-color: #f8f9fa;
+        border-color: #4a90e2;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .form-check-input:checked + .payment-method-label {
+        background-color: rgba(74, 144, 226, 0.05);
+        border-color: #4a90e2;
+        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.1);
+    }
+    
+    /* Online payment details animation */
+    .online-payment-details {
+        transition: all 0.4s ease;
+        background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+        border: 2px solid #e3f2fd;
+    }
+    
+    /* Grid layout for payment systems */
+    .payment-systems-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .payment-system-item {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .payment-system-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        border-color: #4a90e2;
+    }
+    
+    .payment-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 15px;
+        text-decoration: none;
+        color: inherit;
+        height: 100%;
+    }
+    
+    .payment-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #f8f9fa;
+        padding: 12px;
+    }
+    
+    .payment-icon svg {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .payment-info {
+        text-align: center;
+    }
+    
+    .payment-info h6 {
+        margin: 0;
+        font-weight: 600;
+        color: #333;
+        font-size: 16px;
+    }
+    
+    .payment-info span {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+        display: block;
+    }
+    
+    /* Specific hover effects */
+    .payment-system-item:nth-child(1):hover { border-color: #00CF67; }
+    .payment-system-item:nth-child(2):hover { border-color: #FFC107; }
+    .payment-system-item:nth-child(3):hover { border-color: #1E88E5; }
+    .payment-system-item:nth-child(4):hover { border-color: #FF9800; }
+    .payment-system-item:nth-child(5):hover { border-color: #4CAF50; }
+    
+    /* Form check input styling */
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-top: 0;
+    }
+    
+    .form-check-input:checked {
+        background-color: #4a90e2;
+        border-color: #4a90e2;
+    }
+    
+    /* Smooth transitions */
+    .payment-system-item,
+    .payment-method-label,
+    .online-payment-details {
+        animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 576px) {
+        .payment-systems-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .payment-icon {
+            width: 60px;
+            height: 60px;
+        }
+    }
+    
+    @media (max-width: 400px) {
+        .payment-systems-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png" alt="Logo" height="40" class="me-2">
+                <span class="brand-text">O'zbek Oshxonasi</span>
+            </a>
+            
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Bosh sahifa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count badge bg-danger">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle"></i> Profil
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Mening profilim</a></li>
+                            <li><a class="dropdown-item" href="admin.html"><i class="fas fa-cog me-2"></i>Admin panel</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Progress -->
+    <div class="checkout-progress py-4 mt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="progress-steps">
+                        <div class="step active">
+                            <div class="step-icon">1</div>
+                            <div class="step-label">Savatcha</div>
+                        </div>
+                        <div class="step active">
+                            <div class="step-icon">2</div>
+                            <div class="step-label">Yetkazib berish</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">3</div>
+                            <div class="step-label">To'lov</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">4</div>
+                            <div class="step-label">Tasdiqlash</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Content -->
+    <div class="container py-5">
+        <div class="row">
+            <!-- Left Column - Order Details and Forms -->
+            <div class="col-lg-8">
+                <!-- Delivery Information -->
+                <div class="card checkout-card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-truck me-2"></i>Yetkazib Berish Ma'lumotlari
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="deliveryForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">Ism *</label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">Familiya *</label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Telefon raqam *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">+998</span>
+                                    <input type="tel" class="form-control" id="phone" placeholder="90 123 45 67" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Elektron pochta</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Yetkazib berish manzili *</label>
+                                <div class="address-selection">
+                                    <div class="saved-addresses mb-3" id="savedAddresses">
+                                        <!-- Saved addresses will be loaded here -->
+                                    </div>
+                                    
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="addressOption" id="useSavedAddress" checked>
+                                        <label class="form-check-label" for="useSavedAddress">
+                                            Saqlangan manzildan foydalanish
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="addressOption" id="newAddress">
+                                        <label class="form-check-label" for="newAddress">
+                                            Yangi manzil kiritish
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div id="newAddressFields" style="display: none;">
+                                    <div class="mb-3">
+                                        <label for="addressTitle" class="form-label">Manzil nomi (masalan: Uy, Ish)</label>
+                                        <input type="text" class="form-control" id="addressTitle" placeholder="Uy">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">To'liq manzil *</label>
+                                        <textarea class="form-control" id="address" rows="3" required></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="region" class="form-label">Viloyat/Shahar</label>
+                                            <select class="form-select" id="region">
+                                                <option value="">Tanlang</option>
+                                                <option value="tashkent">Toshkent shahri</option>
+                                                <option value="tashkent-region">Toshkent viloyati</option>
+                                                <option value="samarkand">Samarqand</option>
+                                                <option value="bukhara">Buxoro</option>
+                                                <option value="andijan">Andijon</option>
+                                                <option value="fergana">Farg'ona</option>
+                                                <option value="namangan">Namangan</option>
+                                                <option value="khorezm">Xorazm</option>
+                                                <option value="navoi">Navoiy</option>
+                                                <option value="kashkadarya">Qashqadaryo</option>
+                                                <option value="surkhandarya">Surxondaryo</option>
+                                                <option value="jizzakh">Jizzax</option>
+                                                <option value="sirdarya">Sirdaryo</option>
+                                                <option value="karakalpakstan">Qoraqalpog'iston</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="district" class="form-label">Tuman</label>
+                                            <input type="text" class="form-control" id="district">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="landmark" class="form-label">Mo'ljal (yo'naltiruvchi belgi)</label>
+                                        <input type="text" class="form-control" id="landmark" placeholder="Masjid yonida, supermarket qarshisida">
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="saveAddress">
+                                        <label class="form-check-label" for="saveAddress">
+                                            Bu manzilni saqlash
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="deliveryTime" class="form-label">Yetkazib berish vaqtini tanlang</label>
+                                <select class="form-select" id="deliveryTime">
+                                    <option value="asap">Imkon qadar tezroq (30-45 daqiqa)</option>
+                                    <option value="specific">Muayyan vaqt</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3" id="specificTime" style="display: none;">
+                                <label for="deliveryDate" class="form-label">Yetkazib berish sanasi va vaqti</label>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <input type="date" class="form-control" id="deliveryDate" min="">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <select class="form-select" id="deliveryHour">
+                                            <option value="10:00">10:00</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="22:00">22:00</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="orderNotes" class="form-label">Buyurtmaga izoh (ixtiyoriy)</label>
+                                <textarea class="form-control" id="orderNotes" rows="3" placeholder="Masalan: qalampir kam soling, ichimlikni alohida qo'ying"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Payment Method (YANGI QO'SHILDI) -->
+                <div class="card checkout-card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-credit-card me-2"></i>To'lov Usuli
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="payment-methods">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked>
+                                <label class="form-check-label payment-method-label" for="cashOnDelivery">
+                                    <i class="fas fa-money-bill-wave fa-2x me-3 text-success"></i>
+                                    <div>
+                                        <h6 class="mb-1">Naqd pul bilan</h6>
+                                        <p class="text-muted mb-0">Yetkazib berilganda to'lang</p>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cardOnDelivery">
+                                <label class="form-check-label payment-method-label" for="cardOnDelivery">
+                                    <i class="fas fa-credit-card fa-2x me-3 text-primary"></i>
+                                    <div>
+                                        <h6 class="mb-1">Karta orqali (yetkazib berilganda)</h6>
+                                        <p class="text-muted mb-0">Terminal orqali to'lash</p>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="onlinePayment">
+                                <label class="form-check-label payment-method-label" for="onlinePayment">
+                                    <i class="fas fa-globe fa-2x me-3 text-info"></i>
+                                    <div>
+                                        <h6 class="mb-1">Onlayn to'lov</h6>
+                                        <p class="text-muted mb-0">5 xil to'lov tizimi orqali</p>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <!-- Online Payment Details -->
+                            <div class="online-payment-details p-4 border rounded mt-3" id="onlinePaymentDetails" style="display: none;">
+                                <h6 class="mb-4 text-center">Onlayn to'lov tizimini tanlang:</h6>
+                                
+                                <div class="payment-systems-grid">
+                                    <!-- Click -->
+                                    <div class="payment-system-item">
+                                        <a href="https://my.click.uz/services/pay?service_id=YOUR_SERVICE_ID&merchant_id=YOUR_MERCHANT_ID&amount=TOTAL_AMOUNT" 
+                                           target="_blank" 
+                                           class="payment-link">
+                                            <div class="payment-icon">
+                                                <!-- Click SVG logo -->
+                                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="100" height="100" rx="20" fill="#00CF67"/>
+                                                    <path d="M50 25C36.1925 25 25 36.1925 25 50C25 63.8075 36.1925 75 50 75C63.8075 75 75 63.8075 75 50C75 36.1925 63.8075 25 50 25ZM50 70C38.9543 70 30 61.0457 30 50C30 38.9543 38.9543 30 50 30C61.0457 30 70 38.9543 70 50C70 61.0457 61.0457 70 50 70ZM60 40H55V35H45V40H40L50 52.5L60 40Z" fill="white"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <h6>Click</h6>
+                                                <span>Click bilan xazna</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    
+                                    <!-- Payme -->
+                                    <div class="payment-system-item">
+                                        <a href="https://checkout.paycom.uz/YOUR_MERCHANT_ID" 
+                                           target="_blank" 
+                                           class="payment-link">
+                                            <div class="payment-icon">
+                                                <!-- Payme SVG logo -->
+                                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="100" height="100" rx="20" fill="#FFC107"/>
+                                                    <path d="M65 35H35C33.125 35 31.5 36.125 31.5 38V58C31.5 59.875 33.125 61 35 61H65C66.875 61 68.5 59.875 68.5 58V38C68.5 36.125 66.875 35 65 35ZM42.5 45H50V55H42.5V45ZM57.5 55H50V45H57.5V55ZM60 50H57.5V55H60V50ZM60 42.5H57.5V45H60V42.5ZM40 50H42.5V55H40V50ZM40 37.5H42.5V45H40V37.5Z" fill="white"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <h6>Payme</h6>
+                                                <span>To'lov tizimi</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    
+                                    <!-- Uzumbank -->
+                                    <div class="payment-system-item">
+                                        <a href="https://uzumbank.uz" 
+                                           target="_blank" 
+                                           class="payment-link">
+                                            <div class="payment-icon">
+                                                <!-- Uzumbank SVG logo -->
+                                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="100" height="100" rx="20" fill="#1E88E5"/>
+                                                    <path d="M50 30C38.9543 30 30 38.9543 30 50C30 61.0457 38.9543 70 50 70C61.0457 70 70 61.0457 70 50C70 38.9543 61.0457 30 50 30ZM50 65C42.82 65 37 59.18 37 52C37 44.82 42.82 39 50 39C57.18 39 63 44.82 63 52C63 59.18 57.18 65 50 65ZM45 45H55V60H45V45ZM57.5 45H55V60H57.5V45ZM42.5 45H45V60H42.5V45Z" fill="white"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <h6>Uzumbank</h6>
+                                                <span>Bank tizimi</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    
+                                    <!-- Apelsin -->
+                                    <div class="payment-system-item">
+                                        <a href="https://apelsin.uz" 
+                                           target="_blank" 
+                                           class="payment-link">
+                                            <div class="payment-icon">
+                                                <!-- Apelsin SVG logo -->
+                                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="100" height="100" rx="20" fill="#FF9800"/>
+                                                    <circle cx="50" cy="50" r="25" fill="white"/>
+                                                    <path d="M50 35C42.82 35 37 40.82 37 48C37 55.18 42.82 61 50 61C57.18 61 63 55.18 63 48C63 40.82 57.18 35 50 35ZM50 58C44.477 58 40 53.523 40 48C40 42.477 44.477 38 50 38C55.523 38 60 42.477 60 48C60 53.523 55.523 58 50 58Z" fill="#FF9800"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <h6>Apelsin</h6>
+                                                <span>To'lov tizimi</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    
+                                    <!-- Oson -->
+                                    <div class="payment-system-item">
+                                        <a href="https://oson.uz" 
+                                           target="_blank" 
+                                           class="payment-link">
+                                            <div class="payment-icon">
+                                                <!-- Oson SVG logo -->
+                                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="100" height="100" rx="20" fill="#4CAF50"/>
+                                                    <path d="M50 30C38.9543 30 30 38.9543 30 50C30 61.0457 38.9543 70 50 70C61.0457 70 70 61.0457 70 50C70 38.9543 61.0457 30 50 30ZM57.5 55H42.5C40.1562 55 38.5 56.6562 38.5 59C38.5 61.3438 40.1562 63 42.5 63H57.5C59.8438 63 61.5 61.3438 61.5 59C61.5 56.6562 59.8438 55 57.5 55Z" fill="white"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <h6>Oson</h6>
+                                                <span>To'lov tizimi</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <!-- To'lov haqida ma'lumot -->
+                                <div class="mt-4 pt-3 border-top">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="alert alert-info">
+                                                <i class="fas fa-info-circle me-2"></i>
+                                                <strong>Qanday to'lash:</strong> Tanlagan to'lov tizimiga yo'naltirilasiz va to'lovni amalga oshirasiz.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="alert alert-warning">
+                                                <i class="fas fa-shield-alt me-2"></i>
+                                                <strong>Xavfsizlik:</strong> Barcha to'lovlar xavfsiz va shifrlangan.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a href="index.html" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Ortga qaytish
+                    </a>
+                    <button class="btn btn-primary" id="continueToPayment">
+                        Davom etish <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Right Column - Order Summary -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <!-- Order Summary -->
+                    <div class="card checkout-card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-receipt me-2"></i>Buyurtma Xulosasi
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="order-items mb-3" id="checkoutOrderItems">
+                                <!-- Order items will be loaded here -->
+                            </div>
+                            
+                            <div class="order-summary">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Mahsulotlar:</span>
+                                    <span id="checkoutSubtotal">0 so'm</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Yetkazib berish:</span>
+                                    <span id="checkoutDelivery">15 000 so'm</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Chegirma:</span>
+                                    <span class="text-success" id="checkoutDiscount">0 so'm</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between fw-bold fs-5">
+                                    <span>Jami:</span>
+                                    <span id="checkoutTotal">15 000 so'm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Promo Code -->
+                    <div class="card checkout-card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-tag me-2"></i>Promo-kod
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="promoCode" placeholder="Promo-kodni kiriting">
+                                <button class="btn btn-outline-primary" type="button" id="applyPromoCode">Qo'llash</button>
+                            </div>
+                            <div class="promo-suggestions mt-3">
+                                <small class="text-muted d-block mb-2">Faol promo-kodlar:</small>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-light text-dark promo-badge" data-code="OSH10">OSH10 - 10% chegirma</span>
+                                    <span class="badge bg-light text-dark promo-badge" data-code="FIRSTORDER">FIRSTORDER - 15% chegirma</span>
+                                    <span class="badge bg-light text-dark promo-badge" data-code="UZB20">UZB20 - 20 000 so'm chegirma</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Information -->
+                    <div class="card checkout-card">
+                        <div class="card-body">
+                            <h6 class="mb-3">
+                                <i class="fas fa-info-circle me-2"></i>Buyurtma haqida
+                            </h6>
+                            <ul class="list-unstyled small text-muted">
+                                <li class="mb-2">
+                                    <i class="fas fa-clock me-2"></i>Yetkazib berish: 30-45 daqiqa
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-phone me-2"></i>Qo'llab-quvvatlash: +998 90 123 45 67
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-shield-alt me-2"></i>100% xavfsiz to'lov
+                                </li>
+                                <li>
+                                    <i class="fas fa-undo me-2"></i>30 daqiqa ichida bepul bekor qilish
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">To'lovni yakunlash</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="payment-confirmation">
+                        <!-- Payment confirmation will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div class="modal fade" id="orderConfirmationModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Buyurtma muvaffaqiyatli qabul qilindi!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle fa-4x text-success"></i>
+                    </div>
+                    <h4 class="mb-3">Rahmat, buyurtmangiz qabul qilindi!</h4>
+                    <p class="text-muted mb-4">
+                        Buyurtma raqami: <strong id="orderNumber">#12345</strong><br>
+                        Sizning buyurtmangiz tayyorlanish jarayoniga kirdi.
+                    </p>
+                    <div class="order-details mb-4 p-3 bg-light rounded">
+                        <p class="mb-2"><strong>Yetkazib berish manzili:</strong> <span id="confirmationAddress"></span></p>
+                        <p class="mb-2"><strong>Taxminiy vaqt:</strong> <span id="confirmationTime"></span></p>
+                        <p class="mb-2"><strong>To'lov usuli:</strong> <span id="confirmationPayment"></span></p>
+                        <p class="mb-0"><strong>Umumiy summa:</strong> <span id="confirmationTotal"></span></p>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" onclick="window.location.href='profile.html#orders'">
+                            <i class="fas fa-history me-2"></i>Buyurtma tarixini ko'rish
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="window.location.href='index.html'">
+                            <i class="fas fa-home me-2"></i>Bosh sahifaga qaytish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Savatcha</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems" class="mb-3">
+                <!-- Cart items will be loaded here -->
+                <p class="text-center text-muted">Savatchangiz bo'sh</p>
+            </div>
+            <div class="cart-summary mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Jami:</span>
+                    <span id="cartTotal">0 so'm</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Yetkazib berish:</span>
+                    <span>15 000 so'm</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between fw-bold">
+                    <span>Umumiy summa:</span>
+                    <span id="cartGrandTotal">15 000 so'm</span>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100 mb-2" onclick="window.location.href='checkout.html'">Buyurtma berish</button>
+            <button class="btn btn-outline-secondary w-100" data-bs-dismiss="offcanvas">Davom etish</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p>&copy; 2023 O'zbek Oshxonasi. Barcha huquqlar himoyalangan.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa fs-4 me-2"></i>
+                        <i class="fab fa-cc-mastercard fs-4 me-2"></i>
+                        <i class="fab fa-cc-paypal fs-4 me-2"></i>
+                        <i class="fas fa-money-bill-wave fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+    
+    <!-- Payment System JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Address selection toggle
+        const useSavedAddress = document.getElementById('useSavedAddress');
+        const newAddressRadio = document.getElementById('newAddress');
+        const newAddressFields = document.getElementById('newAddressFields');
+        
+        if (useSavedAddress && newAddressRadio && newAddressFields) {
+            useSavedAddress.addEventListener('change', function() {
+                if (this.checked) {
+                    newAddressFields.style.display = 'none';
+                }
+            });
+            
+            newAddressRadio.addEventListener('change', function() {
+                if (this.checked) {
+                    newAddressFields.style.display = 'block';
+                }
+            });
+        }
+        
+        // Delivery time toggle
+        const deliveryTime = document.getElementById('deliveryTime');
+        const specificTime = document.getElementById('specificTime');
+        
+        if (deliveryTime && specificTime) {
+            deliveryTime.addEventListener('change', function() {
+                if (this.value === 'specific') {
+                    specificTime.style.display = 'block';
+                    // Set minimum date to today
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('deliveryDate').min = today;
+                } else {
+                    specificTime.style.display = 'none';
+                }
+            });
+        }
+        
+        // Online payment toggle
+        const onlinePaymentRadio = document.getElementById('onlinePayment');
+        const onlinePaymentDetails = document.getElementById('onlinePaymentDetails');
+        const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+        
+        if (onlinePaymentRadio && onlinePaymentDetails) {
+            // Add change event listeners to all payment radios
+            paymentRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.id === 'onlinePayment' && this.checked) {
+                        onlinePaymentDetails.style.display = 'block';
+                    } else {
+                        onlinePaymentDetails.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Check if online payment is selected on page load
+            if (onlinePaymentRadio.checked) {
+                onlinePaymentDetails.style.display = 'block';
+            }
+        }
+        
+        // Continue to payment button
+        const continueBtn = document.getElementById('continueToPayment');
+        if (continueBtn) {
+            continueBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Validate delivery form
+                const deliveryForm = document.getElementById('deliveryForm');
+                if (!deliveryForm.checkValidity()) {
+                    // Show validation messages
+                    deliveryForm.classList.add('was-validated');
+                    return;
+                }
+                
+                // Get selected payment method
+                let selectedPaymentMethod = '';
+                paymentRadios.forEach(radio => {
+                    if (radio.checked) {
+                        selectedPaymentMethod = radio.id;
+                    }
+                });
+                
+                // Show payment confirmation or proceed
+                if (selectedPaymentMethod === 'onlinePayment') {
+                    // For online payment, show instructions
+                    alert("Iltimos, tanlagan to'lov tizimiga o'tib, to'lovni amalga oshiring. To'lov muvaffaqiyatli amalga oshirilgandan so'ng, buyurtmangiz avtomatik ravishda qabul qilinadi.");
+                } else {
+                    // For cash/card on delivery, proceed to confirmation
+                    const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+                    paymentModal.show();
+                }
+            });
+        }
+        
+        // Promo code badges click
+        const promoBadges = document.querySelectorAll('.promo-badge');
+        promoBadges.forEach(badge => {
+            badge.addEventListener('click', function() {
+                const promoCode = this.getAttribute('data-code');
+                document.getElementById('promoCode').value = promoCode;
+            });
+        });
+        
+        // Apply promo code button
+        const applyPromoBtn = document.getElementById('applyPromoCode');
+        if (applyPromoBtn) {
+            applyPromoBtn.addEventListener('click', function() {
+                const promoCode = document.getElementById('promoCode').value.trim();
+                if (promoCode) {
+                    // Apply promo code logic
+                    alert(`Promo-kod "${promoCode}" qo'llanmoqda...`);
+                    // Add your promo code validation logic here
+                } else {
+                    alert('Iltimos, promo-kodni kiriting!');
+                }
+            });
+        }
+        
+        // Update payment links with actual amount
+        function updatePaymentAmounts(amount) {
+            const amountLinks = document.querySelectorAll('a[href*="TOTAL_AMOUNT"]');
+            amountLinks.forEach(link => {
+                const newHref = link.getAttribute('href').replace('TOTAL_AMOUNT', amount);
+                link.setAttribute('href', newHref);
+            });
+        }
+        
+        // Example: Update payment amounts when page loads
+        // Replace with actual total amount from your cart
+        // updatePaymentAmounts(50000);
+    });
+    </script>
+</body>
+</html>

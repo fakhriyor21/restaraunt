@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | O'zbek Oshxonasi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" type="image/x-icon" href="images/logos/logo.png">
+</head>
+<body>
+    <!-- Admin Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://cdn-icons-png.flaticon.com/512/5787/5787016.png" alt="Logo" height="40" class="me-2">
+                <span class="brand-text">O'zbek Oshxonasi Admin</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i> Asosiy sahifa
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-cog me-1"></i> Admin
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Profil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="adminLogoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Chiqish</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Sidebar and Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#dashboard">
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#foods">
+                                <i class="fas fa-utensils me-2"></i>
+                                Taomlar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#categories">
+                                <i class="fas fa-list-alt me-2"></i>
+                                Kategoriyalar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#orders">
+                                <i class="fas fa-shopping-cart me-2"></i>
+                                Buyurtmalar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#users">
+                                <i class="fas fa-users me-2"></i>
+                                Foydalanuvchilar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#reports">
+                                <i class="fas fa-chart-bar me-2"></i>
+                                Hisobotlar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#settings">
+                                <i class="fas fa-cog me-2"></i>
+                                Sozlamalar
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Statistika</span>
+                    </h6>
+                    <div class="sidebar-stats px-3">
+                        <div class="stat-item mb-2">
+                            <small class="text-muted">Bugungi buyurtmalar:</small>
+                            <div class="fw-bold" id="todayOrders">12</div>
+                        </div>
+                        <div class="stat-item mb-2">
+                            <small class="text-muted">Aktiv foydalanuvchilar:</small>
+                            <div class="fw-bold" id="activeUsers">156</div>
+                        </div>
+                        <div class="stat-item">
+                            <small class="text-muted">Oylik daromad:</small>
+                            <div class="fw-bold" id="monthlyRevenue">12,450,000 so'm</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Admin Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Print</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-calendar me-1"></i>
+                            Bu hafta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="dashboard-section">
+                    <div class="row">
+                        <!-- Stats Cards -->
+                        <div class="col-md-3 mb-4">
+                            <div class="card stat-card bg-primary text-white">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Jami Buyurtmalar</h6>
+                                            <h2 class="card-stat" id="totalOrders">1,245</h2>
+                                        </div>
+                                        <div class="stat-icon">
+                                            <i class="fas fa-shopping-cart fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <p class="card-text"><small>O'tgan oyga nisbatan +12.5%</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-4">
+                            <div class="card stat-card bg-success text-white">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Jami Daromad</h6>
+                                            <h2 class="card-stat" id="totalRevenue">45.2M so'm</h2>
+                                        </div>
+                                        <div class="stat-icon">
+                                            <i class="fas fa-money-bill-wave fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <p class="card-text"><small>O'tgan oyga nisbatan +8.3%</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-4">
+                            <div class="card stat-card bg-warning text-white">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Foydalanuvchilar</h6>
+                                            <h2 class="card-stat" id="totalUsers">856</h2>
+                                        </div>
+                                        <div class="stat-icon">
+                                            <i class="fas fa-users fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <p class="card-text"><small>30 kun ichida 24 yangi</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-4">
+                            <div class="card stat-card bg-info text-white">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Taomlar</h6>
+                                            <h2 class="card-stat" id="totalFoods">42</h2>
+                                        </div>
+                                        <div class="stat-icon">
+                                            <i class="fas fa-utensils fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <p class="card-text"><small>12 ta mashhur taom</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">So'ngi Buyurtmalar</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="recentOrdersTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Mijoz</th>
+                                                    <th>Vaqt</th>
+                                                    <th>Summa</th>
+                                                    <th>Holat</th>
+                                                    <th>Harakatlar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="recentOrdersBody">
+                                                <!-- Recent orders will be loaded here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Foods Management Section -->
+                <section id="foods" class="dashboard-section d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Taomlarni Boshqarish</h3>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFoodModal">
+                            <i class="fas fa-plus me-2"></i>Yangi Taom
+                        </button>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Barcha Taomlar</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="foodsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Rasm</th>
+                                            <th>Nomi</th>
+                                            <th>Kategoriya</th>
+                                            <th>Narxi</th>
+                                            <th>Reyting</th>
+                                            <th>Holat</th>
+                                            <th>Harakatlar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="foodsTableBody">
+                                        <!-- Foods will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categories Management Section -->
+                <section id="categories" class="dashboard-section d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Kategoriyalarni Boshqarish</h3>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                            <i class="fas fa-plus me-2"></i>Yangi Kategoriya
+                        </button>
+                    </div>
+                    
+                    <div class="row" id="categoriesCards">
+                        <!-- Categories cards will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Orders Management Section -->
+                <section id="orders" class="dashboard-section d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Buyurtmalarni Boshqarish</h3>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-primary active" data-filter="all">Barchasi</button>
+                            <button class="btn btn-outline-primary" data-filter="pending">Kutilmoqda</button>
+                            <button class="btn btn-outline-primary" data-filter="processing">Tayyorlanmoqda</button>
+                            <button class="btn btn-outline-primary" data-filter="delivered">Yetkazilgan</button>
+                            <button class="btn btn-outline-primary" data-filter="cancelled">Bekor qilingan</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Barcha Buyurtmalar</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="ordersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Mijoz</th>
+                                            <th>Telefon</th>
+                                            <th>Summa</th>
+                                            <th>Vaqt</th>
+                                            <th>Holat</th>
+                                            <th>Harakatlar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTableBody">
+                                        <!-- Orders will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Users Management Section -->
+                <section id="users" class="dashboard-section d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Foydalanuvchilarni Boshqarish</h3>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <i class="fas fa-user-plus me-2"></i>Yangi Foydalanuvchi
+                        </button>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Barcha Foydalanuvchilar</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="usersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Ism</th>
+                                            <th>Email</th>
+                                            <th>Telefon</th>
+                                            <th>Ro'yxatdan o'tgan</th>
+                                            <th>Buyurtmalar</th>
+                                            <th>Harakatlar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">
+                                        <!-- Users will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section id="reports" class="dashboard-section d-none">
+                    <h3 class="mb-4">Hisobotlar va Statistika</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-8 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Oylik Daromad</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="revenueChart" height="250"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Taomlar Bo'yicha Sotuv</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="foodSalesChart" height="250"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Hisobotlar</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card bg-light">
+                                                <div class="card-body text-center">
+                                                    <i class="fas fa-file-excel fa-3x text-success mb-3"></i>
+                                                    <h5>Kundalik Hisobot</h5>
+                                                    <p>Kunlik buyurtmalar va daromad</p>
+                                                    <button class="btn btn-success w-100">Yuklab olish</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card bg-light">
+                                                <div class="card-body text-center">
+                                                    <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                                                    <h5>Oylik Hisobot</h5>
+                                                    <p>Oylik statistika va tahlillar</p>
+                                                    <button class="btn btn-danger w-100">Yuklab olish</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card bg-light">
+                                                <div class="card-body text-center">
+                                                    <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                                                    <h5>Yillik Hisobot</h5>
+                                                    <p>Yillik o'sish va tendensiyalar</p>
+                                                    <button class="btn btn-primary w-100">Yuklab olish</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings" class="dashboard-section d-none">
+                    <h3 class="mb-4">Sozlamalar</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Umumiy Sozlamalar</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="generalSettingsForm">
+                                        <div class="mb-3">
+                                            <label for="siteName" class="form-label">Sayt Nomi</label>
+                                            <input type="text" class="form-control" id="siteName" value="O'zbek Oshxonasi">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="siteEmail" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="siteEmail" value="info@uzbekoshxonasi.uz">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="sitePhone" class="form-label">Telefon</label>
+                                            <input type="text" class="form-control" id="sitePhone" value="+998901234567">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="deliveryFee" class="form-label">Yetkazib Berish Narxi</label>
+                                            <input type="number" class="form-control" id="deliveryFee" value="15000">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="deliveryTime" class="form-label">Yetkazib Berish Vaqti (daqiqa)</label>
+                                            <input type="number" class="form-control" id="deliveryTime" value="30">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">To'lov Sozlamalari</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="paymentSettingsForm">
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="cashPayment" checked>
+                                                <label class="form-check-label" for="cashPayment">Naqd to'lov</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="cardPayment" checked>
+                                                <label class="form-check-label" for="cardPayment">Karta orqali to'lov</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="onlinePayment">
+                                                <label class="form-check-label" for="onlinePayment">Onlayn to'lov (Payme, Click)</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3" id="onlinePaymentSettings" style="display: none;">
+                                            <label for="merchantId" class="form-label">Merchant ID</label>
+                                            <input type="text" class="form-control" id="merchantId" placeholder="Payme Merchant ID">
+                                            
+                                            <label for="apiKey" class="form-label mt-2">API Key</label>
+                                            <input type="password" class="form-control" id="apiKey" placeholder="API kaliti">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Admin Sozlamalari</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="adminSettingsForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="adminName" class="form-label">Admin Ismi</label>
+                                        <input type="text" class="form-control" id="adminName" value="Admin">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="adminEmail" class="form-label">Admin Email</label>
+                                        <input type="email" class="form-control" id="adminEmail" value="admin@uzbekoshxonasi.uz">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="currentPassword" class="form-label">Joriy Parol</label>
+                                    <input type="password" class="form-control" id="currentPassword">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPassword" class="form-label">Yangi Parol</label>
+                                    <input type="password" class="form-control" id="newPassword">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmPassword" class="form-label">Yangi Parolni Tasdiqlash</label>
+                                    <input type="password" class="form-control" id="confirmPassword">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Parolni Yangilash</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Add Food Modal -->
+    <div class="modal fade" id="addFoodModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi Taom Qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addFoodForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="foodName" class="form-label">Taom Nomi *</label>
+                                <input type="text" class="form-control" id="foodName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="foodCategory" class="form-label">Kategoriya *</label>
+                                <select class="form-select" id="foodCategory" required>
+                                    <option value="">Kategoriyani tanlang</option>
+                                    <option value="1">Milliy Taomlar</option>
+                                    <option value="2">Fast Food</option>
+                                    <option value="3">Ichimliklar</option>
+                                    <option value="4">Shirinliklar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="foodDescription" class="form-label">Tavsif</label>
+                            <textarea class="form-control" id="foodDescription" rows="3"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="foodPrice" class="form-label">Narxi (so'm) *</label>
+                                <input type="number" class="form-control" id="foodPrice" min="0" step="1000" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="foodRating" class="form-label">Reyting (0-5)</label>
+                                <input type="number" class="form-control" id="foodRating" min="0" max="5" step="0.1" value="4.0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="foodImage" class="form-label">Rasm URL</label>
+                            <input type="text" class="form-control" id="foodImage" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="isPopular">
+                                <label class="form-check-label" for="isPopular">
+                                    Mashhur taom sifatida belgilash
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="isAvailable" checked>
+                                <label class="form-check-label" for="isAvailable">
+                                    Mavjud
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi Kategoriya Qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCategoryForm">
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Kategoriya Nomi *</label>
+                            <input type="text" class="form-control" id="categoryName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryDescription" class="form-label">Tavsif</label>
+                            <textarea class="form-control" id="categoryDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryImage" class="form-label">Rasm URL</label>
+                            <input type="text" class="form-control" id="categoryImage" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi Foydalanuvchi Qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="userFirstName" class="form-label">Ism *</label>
+                                <input type="text" class="form-control" id="userFirstName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="userLastName" class="form-label">Familiya *</label>
+                                <input type="text" class="form-control" id="userLastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="userEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPhone" class="form-label">Telefon</label>
+                            <input type="text" class="form-control" id="userPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="userAddress" class="form-label">Manzil</label>
+                            <textarea class="form-control" id="userAddress" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPassword" class="form-label">Parol *</label>
+                            <input type="password" class="form-control" id="userPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userRole" class="form-label">Rol</label>
+                            <select class="form-select" id="userRole">
+                                <option value="user">Foydalanuvchi</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Food Modal -->
+    <div class="modal fade" id="editFoodModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Taomni Tahrirlash</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editFoodForm">
+                        <input type="hidden" id="editFoodId">
+                        <!-- Form fields same as add food form -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Order Modal -->
+    <div class="modal fade" id="viewOrderModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Buyurtma Tafsilotlari: <span id="orderIdHeader"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="orderDetails">
+                        <!-- Order details will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- jQuery (for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/admin.js"></script>
+</body>
+</html>
